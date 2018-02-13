@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
 
+import { Platform, Text, View, StyleSheet, TextInput, ScrollView, CheckBox } from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -14,15 +14,15 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <Text style={styles.title} >todos</Text>
+        <TextInput style={[styles.text, {marginBottom:10}]} autoCorrect={false}
+          placeholder="What needs to be done ?"/>
+        <ScrollView>
+          <View style={{flexDirection: 'row', margin:10}} >
+            <CheckBox style={{marginRight: 7}}/>
+            <Text style={styles.text}>My task</Text>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -32,19 +32,17 @@ const styles = StyleSheet.create(
   {
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
+      padding:30,
+      backgroundColor: '#fffafa',
     },
-    welcome: {
-      fontSize: 20,
+    title: {
+      fontSize: 40,
       textAlign: 'center',
       margin: 10,
+      color: '#400'
     },
-    instructions: {
-      textAlign: 'center',
-      color: '#333333',
-      marginBottom: 5,
-    },
+    text : {
+      fontSize : 22
+    }
   }
 );
