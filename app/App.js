@@ -2,13 +2,6 @@ import React, {Component} from 'react';
 
 import { Platform, Text, View, StyleSheet, TextInput, ScrollView, CheckBox } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 export default class App extends Component {
 
   render() {
@@ -18,14 +11,23 @@ export default class App extends Component {
         <TextInput style={[styles.text, {marginBottom:10}]} autoCorrect={false}
           placeholder="What needs to be done ?"/>
         <ScrollView>
-          <View style={{flexDirection: 'row', margin:10}} >
-            <CheckBox style={{marginRight: 7}}/>
-            <Text style={styles.text}>My task</Text>
-          </View>
+          <Task text='prepare presentation' isDone={true} />
+          <Task text='book restaurant' isDone={false} />
         </ScrollView>
       </View>
+
     );
   }
+}
+
+const Task = (props)=>{
+  const {text, isDone} = props;
+  return (
+    <View style={{flexDirection: 'row', margin:10}} >
+      <CheckBox style={{marginRight: 7}} value={isDone} />
+      <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]} >{text}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create(
