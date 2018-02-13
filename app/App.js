@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import { Platform, Text, View, StyleSheet, TextInput, ScrollView, CheckBox } from 'react-native';
+import MyCheckBox from './MyCheckBox';
 
 export default class App extends Component {
 
@@ -24,7 +25,7 @@ const Task = (props)=>{
   const {text, isDone} = props;
   return (
     <View style={{flexDirection: 'row', margin:10}} >
-      <CheckBox style={{marginRight: 7}} value={isDone} />
+      <MyCheckBox value={isDone} />
       <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]} >{text}</Text>
     </View>
   )
