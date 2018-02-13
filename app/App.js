@@ -9,23 +9,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [
-        {
-          id: currentTaskId++,
-          text: "prepare presentation",
-          isDone: true,
-        },
-        {
-          id: currentTaskId++,
-          text: "book restaurant",
-          isDone: false
-        },
-        {
-          id: currentTaskId++,
-          text: "get a beer",
-          isDone: false
-        },
-      ]
+      tasks: []
     };
   }
 
@@ -41,12 +25,34 @@ export default class App extends Component {
     });
   }
 
+  addTask() {
+    this.setState({
+      ...this.state,
+      tasks: [
+        {
+          id : currentTaskId++,
+          text: this.state.taskInputText,
+          isDone: false
+        },
+        ...this.state.tasks
+      ],
+      taskInputText: null
+    });
+  }
+
   render() {
     const tasks = this.state.tasks;
     return (
       <View style={styles.container}>
         <Text style={styles.title} >todos</Text>
         <TextInput style={[styles.text, {marginBottom:10}]} autoCorrect={false}
+            onSubmitEditing={(event) => this.addTask()}
+            onChangeText={text =>
+              this.setState({
+                ...this.state,
+                taskInputText: text
+              })}
+          value={this.state.taskInputText}
           placeholder="What needs to be done ?"/>
         <ScrollView>
           {
