@@ -45,7 +45,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title} >todos</Text>
-        <TextInput style={[styles.text, {marginBottom:10}]} autoCorrect={false}
+        <TextInput style={[styles.text]} autoCorrect={false}
             onSubmitEditing={(event) => this.addTask()}
             onChangeText={text =>
               this.setState({
@@ -86,13 +86,13 @@ const styles = StyleSheet.create(
       backgroundColor: '#fffafa',
     },
     title: {
-      fontSize: 40,
+      fontSize: 30,
       textAlign: 'center',
       margin: 10,
       color: '#400'
     },
     text : {
-      fontSize : 22
+      fontSize : 19
     }
   }
 );
