@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Platform, Alert } from 'react-native';
 import { Header, Left, Button, Icon, Body, Title, Right } from 'native-base';
-
+import { NavigationActions } from 'react-navigation';
 
 const yo = nav => {
   console.log("hi");
@@ -10,7 +10,7 @@ const yo = nav => {
 const NavHeader = ({navigation}) => (
     <Header style={styles.header}>
       <Left>
-          <Button transparent onPress={()=>{yo(navigation)}}>
+          <Button transparent onPress={()=>{navigation.dispatch(NavigationActions.back())}} >
               <Icon name='arrow-back'/>
           </Button>
       </Left>

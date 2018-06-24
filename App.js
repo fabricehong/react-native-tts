@@ -1,14 +1,14 @@
 import { createStackNavigator } from 'react-navigation';
 import { AppRegistry } from 'react-native';
 import Test from './app/Test';
-import App2 from './app/App';
+import TodoDetail from './app/TodoDetail';
 import React from 'react';
 import IconInitializer from './app/IconInitializer';
 import NavHeader from './app/NavHeader';
 
 const App = createStackNavigator({
     Home: { screen: Test },
-    Profile: { screen: App2 },
+    Detail: { screen: TodoDetail },
   },
   {
     navigationOptions: {

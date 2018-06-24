@@ -1,13 +1,7 @@
 import React from 'react';
 import {
     Container,
-    Header,
-    Left,
     Button,
-    Icon,
-    Body,
-    Title,
-    Right,
     Content,
     Footer,
     Text,
@@ -15,24 +9,12 @@ import {
     Item,
     Input,
     View,
-    CheckBox,
-    ListItem
 } from 'native-base';
 import { StyleSheet, Platform } from 'react-native';
+import Task from './Task';
 
 let currentTaskId = 0;
 
-const Task = (props)=>{
-    const {text, isDone, onValueChange, onPress} = props;
-    return (
-        <ListItem onPress={onPress}>
-            <CheckBox onPress={onValueChange} checked={isDone} />
-            <Body>
-              <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]}>{text}</Text>
-            </Body>
-          </ListItem>
-    )
-  }
 export default class Test extends React.Component {
 
     constructor(props) {
@@ -103,7 +85,7 @@ export default class Test extends React.Component {
                     <Content >
                         {
                             tasks.map((task =>
-                                <Task onPress={() => navigation.navigate("Profile")} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                                <Task onPress={() => navigation.navigate("Detail")} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
                                 )
                               )
                         }
@@ -131,10 +113,6 @@ console.log(`KKK: ${Expo.Constants.statusBarHeight}`);
 
 const styles = StyleSheet.create(
     {
-        header: {
-            paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight,
-            height: 54 + Expo.Constants.statusBarHeight
-        },
         content: {
             margin:10,
             flex:1
