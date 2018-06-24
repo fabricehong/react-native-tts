@@ -24,15 +24,6 @@ export default class Test extends React.Component {
         };
     }
 
-    async componentWillMount() {
-        await Expo.Font.loadAsync({
-            'Roboto': require('native-base/Fonts/Roboto.ttf'),
-            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-            'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
-        });
-        this.setState({ready:true})
-    }
-
     switchChecked(taskId) {
         this.setState({
           ...this.state,
@@ -60,16 +51,13 @@ export default class Test extends React.Component {
         });
     }
 
-    navigateToDetail = taskId => {
+    navigateToDetail = task => {
         const { navigation } = this.props;
-        navigation.push('Detail');
+        navigation.push('Detail', {task});
     }
 
     render() {
         const { tasks } = this.state;
-        if (!this.state.ready) {
-            return null;
-        }
         return (
             <Container >
                 <View style={styles.content} >
@@ -89,7 +77,7 @@ export default class Test extends React.Component {
                     <Content >
                         {
                             tasks.map((task =>
-                                <Task onPress={() => this.navigateToDetail(task.id)} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                                <Task onPress={() => this.navigateToDetail(task)} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
                                 )
                               )
                         }
