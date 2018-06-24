@@ -23,9 +23,9 @@ import { StyleSheet, Platform } from 'react-native';
 let currentTaskId = 0;
 
 const Task = (props)=>{
-    const {text, isDone, onValueChange} = props;
+    const {text, isDone, onValueChange, onPress} = props;
     return (
-        <ListItem>
+        <ListItem onPress={onPress}>
             <CheckBox onPress={onValueChange} checked={isDone} />
             <Body>
               <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]}>{text}</Text>
@@ -79,23 +79,13 @@ export default class Test extends React.Component {
     }
 
     render() {
-        const tasks = this.state.tasks;
+        const { tasks } = this.state;
+        const { navigation } = this.props;
         if (!this.state.ready) {
             return null;
         }
         return (
             <Container >
-                <Header style={styles.header} >
-                    <Left>
-                        <Button transparent>
-                            {/* <Icon name='menu'/> */}
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Headeros</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <View style={styles.content} >
                         <Item regular>
                             <Input
@@ -113,7 +103,7 @@ export default class Test extends React.Component {
                     <Content >
                         {
                             tasks.map((task =>
-                                <Task key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                                <Task onPress={() => navigation.navigate("Profile")} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
                                 )
                               )
                         }
