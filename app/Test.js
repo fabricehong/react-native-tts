@@ -14,9 +14,10 @@ import {
     FooterTab,
     Item,
     Input,
-    View
+    View,
+    CheckBox,
+    ListItem
 } from 'native-base';
-import MyCheckBox from './MyCheckBox';
 import { StyleSheet, Platform } from 'react-native';
 
 let currentTaskId = 0;
@@ -24,10 +25,12 @@ let currentTaskId = 0;
 const Task = (props)=>{
     const {text, isDone, onValueChange} = props;
     return (
-      <View style={{flexDirection: 'row', margin:10}} >
-        <MyCheckBox value={isDone} onValueChange={onValueChange}/>
-        <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]} >{text}</Text>
-      </View>
+        <ListItem>
+            <CheckBox onPress={onValueChange} checked={isDone} />
+            <Body>
+              <Text style={[styles.text, {color : isDone ? '#bbb' : '#888', textDecorationLine: isDone ? 'line-through' : null}]}>{text}</Text>
+            </Body>
+          </ListItem>
     )
   }
 export default class Test extends React.Component {
@@ -43,6 +46,7 @@ export default class Test extends React.Component {
         await Expo.Font.loadAsync({
             'Roboto': require('native-base/Fonts/Roboto.ttf'),
             'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+            'Ionicons': require('native-base/Fonts/Ionicons.ttf'),
         });
         this.setState({ready:true})
     }
@@ -58,7 +62,7 @@ export default class Test extends React.Component {
             }))
         });
       }
-      
+
     addTask = () => {
         this.setState({
             ...this.state,
@@ -88,7 +92,7 @@ export default class Test extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Headerk</Title>
+                        <Title>Headeros</Title>
                     </Body>
                     <Right/>
                 </Header>
