@@ -1,9 +1,5 @@
 import React from 'react';
 
-import { StyleSheet, Platform } from 'react-native';
-
-let currentTaskId = 0;
-
 export default class IconInitializer extends React.Component {
 
     constructor(props) {

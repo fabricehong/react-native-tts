@@ -1,13 +1,12 @@
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry } from 'react-native';
-import Test from './app/Test';
+import TodoList from './app/TodoList';
 import TodoDetail from './app/TodoDetail';
 import React from 'react';
 import IconInitializer from './app/IconInitializer';
 import NavHeader from './app/NavHeader';
 
-const App = createStackNavigator({
-    Home: { screen: Test },
+const RootNavigator = createStackNavigator({
+    Home: { screen: TodoList },
     Detail: { screen: TodoDetail },
   },
   {
@@ -29,6 +28,6 @@ const App = createStackNavigator({
 
 export default props => (
   <IconInitializer>
-    <App/>
+    <RootNavigator/>
   </IconInitializer>
 );

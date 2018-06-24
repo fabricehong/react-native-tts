@@ -3,10 +3,6 @@ import { StyleSheet, Platform, Alert } from 'react-native';
 import { Header, Left, Button, Icon, Body, Title, Right } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
-const yo = nav => {
-  console.log("hi");
-}
-
 const NavHeader = ({navigation}) => (
     <Header style={styles.header}>
       <Left>

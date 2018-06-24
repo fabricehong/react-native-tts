@@ -10,7 +10,7 @@ import {
     Input,
     View,
 } from 'native-base';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Task from './Task';
 
 let currentTaskId = 0;
@@ -60,9 +60,13 @@ export default class Test extends React.Component {
         });
     }
 
+    navigateToDetail = taskId => {
+        const { navigation } = this.props;
+        navigation.push('Detail');
+    }
+
     render() {
         const { tasks } = this.state;
-        const { navigation } = this.props;
         if (!this.state.ready) {
             return null;
         }
@@ -85,7 +89,7 @@ export default class Test extends React.Component {
                     <Content >
                         {
                             tasks.map((task =>
-                                <Task onPress={() => navigation.navigate("Detail")} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                                <Task onPress={() => this.navigateToDetail(task.id)} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
                                 )
                               )
                         }
@@ -108,8 +112,6 @@ export default class Test extends React.Component {
         );
     }
 }
-
-console.log(`KKK: ${Expo.Constants.statusBarHeight}`);
 
 const styles = StyleSheet.create(
     {
