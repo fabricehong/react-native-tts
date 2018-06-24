@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Expo from 'expo';
 
 export default class IconInitializer extends React.Component {
 

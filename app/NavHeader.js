@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Platform, Alert } from 'react-native';
 import { Header, Left, Button, Icon, Body, Title, Right } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import * as Expo from 'expo';
 
 const NavHeader = ({navigation}) => (
     <Header style={styles.header}>

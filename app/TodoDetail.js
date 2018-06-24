@@ -6,12 +6,20 @@ class TodoDetail extends React.Component {
 
     constructor(props) {
         super(props);
-        this.task = props.navigation.state.params.task;
+        this.task = props.task || props.navigation.state.params.task;
         // this.state = {};
         this.state = {
             text: this.task.text,
             notes: this.task.notes,
         };
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.task = newProps.task || newProps.navigation.state.params.task;
+        this.setState({
+            text: this.task.text,
+            notes: this.task.notes,
+        })
     }
 
     onChangeText = text => {

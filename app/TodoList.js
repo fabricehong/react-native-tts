@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Expo from 'expo';
 import {
     Container,
     Button,
@@ -12,6 +13,13 @@ import {
 } from 'native-base';
 import { StyleSheet } from 'react-native';
 import Task from './Task';
+import TodoDetail from './TodoDetail';
+import Platform, {
+    isPortrait,
+    isLandscape,
+    isTablet,
+    isPhone,
+  } from './utils/Platform';
 
 let currentTaskId = 0;
 
@@ -20,8 +28,19 @@ export default class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: [],
+            orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
+            devicetype: Platform.isTablet() ? 'tablet' : 'phone',
+            selection: []
         };
+
+        // Event Listener for orientation changes
+        Dimensions.addEventListener('change', () => {
+            this.setState({
+                orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
+            });
+            console.log('Nouvelle orientation: ' + this.state.orientation);
+        });
     }
 
     switchChecked(taskId) {
@@ -52,15 +71,26 @@ export default class Test extends React.Component {
     }
 
     navigateToDetail = task => {
-        const { navigation } = this.props;
-        navigation.navigate('Detail', {task});
+        this.setState({ selection: task });
+        const hasLandscapeOrientation = this.state.orientation == 'landscape';
+        console.log('selected task "' + this.state.selection.text + '" with landscape ' + hasLandscapeOrientation);
+        if (!hasLandscapeOrientation) {
+            const { navigation } = this.props;
+            navigation.navigate('Detail', { task });
+        }
     }
 
     render() {
         const { tasks } = this.state;
+        const hasLandscapeOrientation = this.state.orientation == 'landscape';
+        const hasSelection = (this.state.selection || null) != null;
+        const detailComponent = hasLandscapeOrientation ? (
+            <TodoDetail task={this.state.selection} />
+            ) : null;
         return (
             <Container >
                 <View style={styles.content} >
+                    <View style={[styles.container, styles.leftView]}>
                         <Item regular>
                             <Input
                                 autoCorrect={false}
@@ -74,14 +104,24 @@ export default class Test extends React.Component {
                                 placeholder="What needs to be done ?"
                             />
                         </Item>
-                    <Content >
-                        {
-                            tasks.map((task =>
-                                <Task onPress={() => this.navigateToDetail(task)} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                        <Content >
+                            {
+                                tasks.map((task =>
+                                    <Task onPress={() => this.navigateToDetail(task)} key={task.id} onValueChange={_ => this.switchChecked(task.id)} {...task} />
+                                    )
                                 )
-                              )
-                        }
-                    </Content>
+                            }
+                        </Content>
+                    </View>
+                    <View
+                        style={[
+                        styles.container,
+                        hasLandscapeOrientation &&
+                            hasSelection &&
+                            styles.rightViewVisible,
+                        ]}>
+                        {detailComponent}
+                    </View>
                 </View>
                 <Footer>
                     <FooterTab>
@@ -101,11 +141,22 @@ export default class Test extends React.Component {
     }
 }
 
-const styles = StyleSheet.create(
-    {
-        content: {
-            margin:10,
-            flex:1
-        }
-    }
-);
+const styles = StyleSheet.create({
+    content: {
+      margin: 10,
+      flex: 1,
+      flexDirection: 'row'
+    },
+    container: {
+      flexDirection: 'column',
+      backgroundColor: '#F5FCFF',
+    },
+    leftView: {
+      flex: 2,
+      justifyContent: 'space-between',
+    },
+    rightViewVisible: {
+      flex: 3,
+    },
+  });
+  
