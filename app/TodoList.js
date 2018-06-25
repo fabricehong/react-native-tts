@@ -11,7 +11,7 @@ import {
     Input,
     View,
 } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Task from './Task';
 import TodoDetail from './TodoDetail';
 import Platform, {
@@ -23,7 +23,7 @@ import Platform, {
 
 let currentTaskId = 0;
 
-export default class Test extends React.Component {
+export default class TodoList extends React.Component {
 
     constructor(props) {
         super(props);
