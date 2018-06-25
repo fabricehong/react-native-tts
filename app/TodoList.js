@@ -14,12 +14,6 @@ import {
 import { StyleSheet, Dimensions } from 'react-native';
 import Task from './Task';
 import TodoDetail from './TodoDetail';
-import Platform, {
-    isPortrait,
-    isLandscape,
-    isTablet,
-    isPhone,
-  } from './utils/Platform';
 
 let currentTaskId = 0;
 
@@ -29,18 +23,8 @@ export default class TodoList extends React.Component {
         super(props);
         this.state = {
             tasks: [],
-            orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
-            devicetype: Platform.isTablet() ? 'tablet' : 'phone',
             selection: []
         };
-
-        // Event Listener for orientation changes
-        Dimensions.addEventListener('change', () => {
-            this.setState({
-                orientation: Platform.isPortrait() ? 'portrait' : 'landscape',
-            });
-            console.log('Nouvelle orientation: ' + this.state.orientation);
-        });
     }
 
     switchChecked(taskId) {
@@ -72,19 +56,19 @@ export default class TodoList extends React.Component {
 
     navigateToDetail = task => {
         this.setState({ selection: task });
-        const hasLandscapeOrientation = this.state.orientation == 'landscape';
-        console.log('selected task "' + this.state.selection.text + '" with landscape ' + hasLandscapeOrientation);
-        if (!hasLandscapeOrientation) {
+        const {isPortrait} = this.props;
+        console.log('selected task "' + this.state.selection.text + '" with portrait ' + isPortrait);
+        if (isPortrait) {
             const { navigation } = this.props;
             navigation.navigate('Detail', { task });
         }
     }
 
     render() {
+        const {isPortrait} = this.props;
         const { tasks } = this.state;
-        const hasLandscapeOrientation = this.state.orientation == 'landscape';
         const hasSelection = (this.state.selection || null) != null;
-        const detailComponent = hasLandscapeOrientation ? (
+        const detailComponent = !isPortrait ? (
             <TodoDetail task={this.state.selection} />
             ) : null;
         return (
@@ -116,7 +100,7 @@ export default class TodoList extends React.Component {
                     <View
                         style={[
                         styles.container,
-                        hasLandscapeOrientation &&
+                        !isPortrait &&
                             hasSelection &&
                             styles.rightViewVisible,
                         ]}>

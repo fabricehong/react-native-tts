@@ -4,9 +4,10 @@ import TodoDetail from './app/TodoDetail';
 import React from 'react';
 import IconInitializer from './app/IconInitializer';
 import NavHeader from './app/NavHeader';
+import withOrientation from './app/orientation/withOrientation';
 
 const RootNavigator = createStackNavigator({
-    Home: { screen: TodoList },
+    Home: { screen: withOrientation(TodoList) },
     Detail: { screen: TodoDetail },
   },
   {
