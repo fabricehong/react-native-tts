@@ -1,4 +1,7 @@
 {
-  "name": "tts",
-  "displayName": "tts"
+  "expo": {
+    "sdkVersion": "27.0.0",
+    "slug": "tts",
+    "name": "tts"
+  }
 }
