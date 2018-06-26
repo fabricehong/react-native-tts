@@ -11,7 +11,7 @@ import {
     Input,
     View,
 } from 'native-base';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Task from './Task';
 import TodoDetail from './TodoDetail';
 
@@ -23,7 +23,6 @@ export default class TodoList extends React.Component {
         super(props);
         this.state = {
             tasks: [],
-            selection: []
         };
     }
 
@@ -57,7 +56,7 @@ export default class TodoList extends React.Component {
     navigateToDetail = task => {
         this.setState({ selection: task });
         const {isPortrait} = this.props;
-        console.log('selected task "' + this.state.selection.text + '" with portrait ' + isPortrait);
+        console.log('selected task "' + task.text + '" with portrait ' + isPortrait);
         if (isPortrait) {
             const { navigation } = this.props;
             navigation.navigate('Detail', { task });
@@ -66,10 +65,9 @@ export default class TodoList extends React.Component {
 
     render() {
         const {isPortrait} = this.props;
-        const { tasks } = this.state;
-        const hasSelection = (this.state.selection || null) != null;
-        const detailComponent = !isPortrait ? (
-            <TodoDetail task={this.state.selection} />
+        const { tasks, selection } = this.state;
+        const detailComponent = !isPortrait && selection ? (
+            <TodoDetail task={selection} />
             ) : null;
         return (
             <Container >
@@ -101,7 +99,7 @@ export default class TodoList extends React.Component {
                         style={[
                         styles.container,
                         !isPortrait &&
-                            hasSelection &&
+                            selection &&
                             styles.rightViewVisible,
                         ]}>
                         {detailComponent}

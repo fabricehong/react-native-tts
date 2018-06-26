@@ -6,27 +6,15 @@ class TodoDetail extends React.Component {
 
     constructor(props) {
         super(props);
-        this.task = props.task || props.navigation.state.params.task;
+        const task = props.task || this.props.navigation.state.params.task;
         // this.state = {};
         this.state = {
-            text: this.task.text,
-            notes: this.task.notes,
+            text: task ? task.text : null,
         };
     }
 
-
-    onChangeText = text => {
-        this.task.text = text;
-        this.setState({text});
-    }
-
-    onChangeNotes = notes => {
-        this.task.notes = notes;
-        this.setState({notes});
-    }
-
     render() {
-        const { text, notes } = this.state;
+        const { text } = this.state;
         return (
             <Container >
                 <View style={styles.content} >
@@ -36,10 +24,10 @@ class TodoDetail extends React.Component {
                                 autoCorrect={false}
                                 placeholder="What needs to be done ?"
                                 value={text}
-                                onChangeText={this.onChangeText}
+                                onChangeText={txt => this.setState({text: txt})}
                             />
                         </Item>
-                        <Textarea rowSpan={5} bordered placeholder="Notes" value={notes} onChangeText={this.onChangeNotes} />
+                        <Textarea rowSpan={5} bordered placeholder="Notes" />
                     </Content>
                 </View>
             </Container>
